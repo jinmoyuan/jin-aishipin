@@ -167,68 +167,71 @@
     </footer>
 
     <script>
-        // Supabase配置
-        const supabaseUrl = 'https://afvyyqjiskdrkjejhkxo.supabase.co';
-        const supabaseKey = 'sb_publishable_FFLBcgMReRzkkABlSJa2Q_gzWxYxpG';
-        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
-        
-        // 页面加载时查询数据
-        async function fetchNotes() {
-            try {
-                const { data, error } = await supabase
-                    .from('video_notes')
-                    .select('*');
-                
-                if (error) {
-                    console.error('Error fetching notes:', error);
-                    document.getElementById('loading').innerHTML = '<p class="text-red-400">加载失败，请刷新页面重试</p>';
-                    return;
-                }
-                
-                // 隐藏加载状态
-                document.getElementById('loading').style.display = 'none';
-                
-                // 按分类渲染数据
-                renderNotesByCategory(data);
-            } catch (error) {
-                console.error('Unexpected error:', error);
-                document.getElementById('loading').innerHTML = '<p class="text-red-400">加载失败，请刷新页面重试</p>';
-            }
-        }
-        
-        // 按分类渲染笔记
-        function renderNotesByCategory(notes) {
-            // 分类容器
-            const containers = {
-                '分镜技巧': document.getElementById('storyboard-notes'),
-                '角色建立': document.getElementById('character-notes'),
-                '转场技巧': document.getElementById('transition-notes'),
-                'AI指令': document.getElementById('ai-notes')
-            };
-            
-            // 清空容器
-            Object.values(containers).forEach(container => {
-                if (container) container.innerHTML = '';
-            });
-            
-            // 按分类添加笔记
-            notes.forEach(note => {
-                const container = containers[note.category];
-                if (container) {
-                    const noteCard = document.createElement('div');
-                    noteCard.className = 'bg-dark/50 p-6 rounded-xl border border-primary/20 card-hover';
-                    noteCard.innerHTML = `
-                        <h4 class="font-semibold mb-3 text-primary">${note.title}</h4>
-                        <p class="text-gray-300 text-sm">${note.content}</p>
-                        <p class="text-gray-400 text-xs mt-4">${new Date(note.created_at).toLocaleString()}</p>
-                    `;
-                    container.appendChild(noteCard);
-                }
-            });
-        }
-        
         // 页面加载时执行
-        window.addEventListener('DOMContentLoaded', fetchNotes);
+        window.addEventListener('DOMContentLoaded', function() {
+            // Supabase配置
+            const supabaseUrl = 'https://afvyyqjiskdrkjejhkxo.supabase.co';
+            const supabaseKey = 'sb_publishable_FFLBcgMReRzkkABlSJa2Q_gzWxYxpG';
+            const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+            
+            // 页面加载时查询数据
+            async function fetchNotes() {
+                try {
+                    const { data, error } = await supabase
+                        .from('video_notes')
+                        .select('*');
+                    
+                    if (error) {
+                        console.error('Error fetching notes:', error);
+                        document.getElementById('loading').innerHTML = '<p class="text-red-400">加载失败，请刷新页面重试</p>';
+                        return;
+                    }
+                    
+                    // 隐藏加载状态
+                    document.getElementById('loading').style.display = 'none';
+                    
+                    // 按分类渲染数据
+                    renderNotesByCategory(data);
+                } catch (error) {
+                    console.error('Unexpected error:', error);
+                    document.getElementById('loading').innerHTML = '<p class="text-red-400">加载失败，请刷新页面重试</p>';
+                }
+            }
+            
+            // 按分类渲染笔记
+            function renderNotesByCategory(notes) {
+                // 分类容器
+                const containers = {
+                    '分镜技巧': document.getElementById('storyboard-notes'),
+                    '角色建立': document.getElementById('character-notes'),
+                    '转场技巧': document.getElementById('transition-notes'),
+                    'AI指令': document.getElementById('ai-notes')
+                };
+                
+                // 清空容器
+                Object.values(containers).forEach(container => {
+                    if (container) container.innerHTML = '';
+                });
+                
+                // 按分类添加笔记
+                notes.forEach(note => {
+                    const container = containers[note.category];
+                    if (container) {
+                        const noteCard = document.createElement('div');
+                        noteCard.className = 'bg-dark/50 p-6 rounded-xl border border-primary/20 card-hover';
+                        noteCard.innerHTML = `
+                            <h4 class="font-semibold mb-3 text-primary">${note.title}</h4>
+                            <p class="text-gray-300 text-sm">${note.content}</p>
+                            <p class="text-gray-400 text-xs mt-4">${new Date(note.created_at).toLocaleString()}</p>
+                        `;
+                        container.appendChild(noteCard);
+                    }
+                });
+            }
+            
+            // 执行查询
+            fetchNotes();
+        });
     </script>
 </body>
 </html>
