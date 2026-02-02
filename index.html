@@ -398,23 +398,41 @@
         </div>
     </footer>
 </body>
+<!-- 简易AI对话 -->
+<div id="chat-widget" style="position:fixed;bottom:20px;right:20px;width:300px;background:#1e1b4b;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.3);z-index:100;">
+  <div style="padding:12px;background:#4c1d95;border-radius:12px 12px 0 0;color:white;font-weight:bold;cursor:pointer;" onclick="document.getElementById('chat-box').style.display=document.getElementById('chat-box').style.display==='none'?'block':'none'">
+    💬 AI视频助手
+  </div>
+  <div id="chat-box" style="display:none;padding:12px;height:300px;overflow-y:auto;">
+    <div id="chat-messages" style="margin-bottom:10px;color:#e0e0e0;font-size:14px;"></div>
+    <input id="chat-input" type="text" placeholder="问分镜/角色/转场问题..." style="width:100%;padding:8px;border-radius:6px;border:1px solid #4c1d95;background:#0f172a;color:white;" onkeypress="if(event.key==='Enter')sendChat()">
+    <button onclick="sendChat()" style="width:100%;margin-top:8px;padding:8px;background:#4c1d95;color:white;border:none;border-radius:6px;cursor:pointer;">发送</button>
+  </div>
+</div>
 
-<script src="https://lf-cdn.coze.cn/obj/unpkg/flow-platform/chat-app-sdk/1.2.0-beta.19/libs/cn/index.js"></script>
 <script>
-  new CozeWebSDK.WebChatClient({
-    config: {
-      bot_id: '7602310924758433798',
-    },
-    componentProps: {
-      title: 'Coze',
-    },
-    auth: {
-      type: 'token',
-      token: 'pat_********',
-      onRefreshToken: function () {
-        return 'pat_********'
-      }
-    }
-  });
+async function sendChat() {
+  const input = document.getElementById('chat-input');
+  const messages = document.getElementById('chat-messages');
+  const msg = input.value;
+  if (!msg) return;
+  
+  messages.innerHTML += `<div style="margin:8px 0;"><b>你:</b> ${msg}</div>`;
+  messages.innerHTML += `<div style="margin:8px 0;color:#a78bfa;"><b>AI:</b> 思考中...</div>`;
+  input.value = '';
+  
+  try {
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({message: msg})
+    });
+    const data = await res.json();
+    messages.lastElementChild.innerHTML = `<b>AI:</b> ${data.reply || data.error || '出错了'}`;
+  } catch(e) {
+    messages.lastElementChild.innerHTML = `<b>AI:</b> 网络错误，请重试`;
+  }
+}
+</script>
 </script>
 </html>
