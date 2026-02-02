@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI视频制作笔记助手 - 静态版本</title>
+    <title>AI视频制作笔记助手</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script>
@@ -15,7 +15,11 @@
                         secondary: '#8b5cf6',
                         dark: '#1e1b4b',
                         darker: '#171123',
-                        light: '#e0e7ff'
+                        light: '#e0e7ff',
+                        lightBg: '#ffffff',
+                        lightText: '#1f2937',
+                        lightBodyText: '#4b5563',
+                        lightCardBg: '#f3f4f6'
                     },
                     fontFamily: {
                         sans: ['Inter', 'system-ui', 'sans-serif']
@@ -23,6 +27,37 @@
                 }
             }
         }
+    </script>
+    <script>
+        // 主题切换功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
+            
+            // 检查本地存储中的主题偏好
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                body.classList.add(savedTheme);
+                if (savedTheme === 'light-theme') {
+                    themeToggle.innerHTML = '<i class="fa fa-moon-o"></i>';
+                }
+            }
+            
+            // 主题切换事件
+            themeToggle.addEventListener('click', function() {
+                if (body.classList.contains('light-theme')) {
+                    body.classList.remove('light-theme');
+                    body.classList.add('dark-theme');
+                    themeToggle.innerHTML = '<i class="fa fa-sun-o"></i>';
+                    localStorage.setItem('theme', 'dark-theme');
+                } else {
+                    body.classList.remove('dark-theme');
+                    body.classList.add('light-theme');
+                    themeToggle.innerHTML = '<i class="fa fa-moon-o"></i>';
+                    localStorage.setItem('theme', 'light-theme');
+                }
+            });
+        });
     </script>
     <style type="text/tailwindcss">
         @layer utilities {
@@ -38,80 +73,199 @@
         }
     </style>
     <style>
-        /* 全局平滑过渡效果 */
-        * {
-            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        /* 深色主题 */
+        body.dark-theme {
+            @apply bg-darker text-light;
         }
         
-        /* 深色主题 */
-        body {
-            @apply bg-darker text-light min-h-screen;
+        /* 浅色主题 */
+        body.light-theme {
+            @apply bg-lightBg text-lightText;
+        }
+        
+        body.light-theme .bg-dark\/50 {
+            @apply bg-gray-100;
+        }
+        
+        body.light-theme .bg-darker\/80 {
+            @apply bg-gray-200;
+        }
+        
+        body.light-theme .border-primary\/20,
+        body.light-theme .border-secondary\/20 {
+            @apply border-gray-300;
+        }
+        
+        body.light-theme .text-gray-300 {
+            @apply text-gray-600;
+        }
+        
+        body.light-theme .text-gray-400 {
+            @apply text-gray-500;
+        }
+        
+        body.light-theme .section-divider {
+            @apply bg-gradient-to-r from-transparent via-primary/20 to-transparent;
+        }
+        
+        /* 主题切换按钮 */
+        #theme-toggle {
+            @apply fixed top-6 right-6 w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center cursor-pointer shadow-lg transition-all duration-300 z-50;
+        }
+        
+        #theme-toggle:hover {
+            @apply transform scale-110;
         }
     </style>
 </head>
-<body class="bg-darker text-light min-h-screen">
+<body class="bg-darker text-light min-h-screen dark-theme">
+    <!-- 主题切换按钮 -->
+    <button id="theme-toggle" class="fixed top-6 right-6 w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center cursor-pointer shadow-lg transition-all duration-300 z-50">
+        <i class="fa fa-sun-o"></i>
+    </button>
+    
     <!-- 顶部Hero区 -->
-    <section class="py-20 px-4 md:px-8 lg:px-16 bg-gradient-to-b from-dark to-darker">
+    <section class="py-20 px-4 md:px-8 lg:px-16 dark:bg-gradient-to-b dark:from-dark dark:to-darker light:bg-gradient-to-b light:from-gray-100 light:to-white">
         <div class="max-w-6xl mx-auto text-center">
             <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
                 AI视频制作笔记助手
             </h1>
             <p class="text-xl md:text-2xl text-gray-300 mb-12">
-                静态版本
+                实操笔记精华汇总
             </p>
             <div class="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto"></div>
         </div>
     </section>
 
-    <!-- 笔记展示区 -->
-    <section class="py-16 px-4 md:px-8 lg:px-16 bg-darker">
+    <!-- 项目路演区 -->
+    <section class="py-16 px-4 md:px-8 lg:px-16 dark:bg-darker light:bg-white">
         <div class="max-w-6xl mx-auto">
-            <h2 class="text-3xl font-bold mb-12 text-center">视频制作笔记</h2>
-            
+            <!-- 痛点描述 -->
+            <div class="mb-16 text-center">
+                <h2 class="text-3xl font-bold mb-8">项目路演</h2>
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="text-left">
+                        <h3 class="text-xl font-semibold mb-4 text-primary">痛点描述</h3>
+                        <p class="text-gray-300 mb-6">
+                            动漫视频制作知识分散在30多篇笔记里，查找困难，新手不知道从何学起。
+                            传统的笔记管理方式无法快速定位核心知识点，导致学习效率低下。
+                        </p>
+                        <h3 class="text-xl font-semibold mb-4 text-primary">解决方案</h3>
+                        <p class="text-gray-300">
+                            一个展示页面，将笔记按分类整理展示，分为分镜技巧、角色建立、转场技巧、AI指令汇总四大板块，
+                            每个板块展示3-4个核心知识点卡片，方便快速查找和学习。
+                        </p>
+                    </div>
+                    <div class="bg-dark/50 p-6 rounded-xl border border-primary/20">
+                        <h3 class="text-xl font-semibold mb-6 text-center">笔记分类</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-darker/80 p-4 rounded-lg text-center card-hover">
+                                <i class="fa fa-film text-2xl text-primary mb-2"></i>
+                                <p class="font-medium">分镜技巧</p>
+                            </div>
+                            <div class="bg-darker/80 p-4 rounded-lg text-center card-hover">
+                                <i class="fa fa-users text-2xl text-secondary mb-2"></i>
+                                <p class="font-medium">角色建立</p>
+                            </div>
+                            <div class="bg-darker/80 p-4 rounded-lg text-center card-hover">
+                                <i class="fa fa-exchange text-2xl text-primary mb-2"></i>
+                                <p class="font-medium">转场技巧</p>
+                            </div>
+                            <div class="bg-darker/80 p-4 rounded-lg text-center card-hover">
+                                <i class="fa fa-magic text-2xl text-secondary mb-2"></i>
+                                <p class="font-medium">AI指令汇总</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- 笔记分类展示 -->
-            <div class="space-y-12">
+            <div class="mb-16">
                 <!-- 分镜技巧 -->
-                <div>
+                <div class="mb-12">
                     <h3 class="text-2xl font-semibold mb-6 flex items-center">
                         <i class="fa fa-film text-primary mr-3"></i>
                         分镜技巧
                     </h3>
                     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         <div class="bg-dark/50 p-6 rounded-xl border border-primary/20 card-hover">
-                            <h4 class="font-semibold mb-3 text-primary">场景建立序列</h4>
-                            <p class="text-gray-300 text-sm">经典漏斗式从城市鸟瞰→街区→建筑→角色；视觉韵脚式用相同构图连接场景；核心是讲述微型故事而非展示地点</p>
+                            <h4 class="font-semibold mb-3 text-primary">三镜头法</h4>
+                            <p class="text-gray-300 text-sm">
+                                主镜头、中景、近景的组合使用，营造层次感和叙事节奏，适合对话场景。
+                            </p>
+                        </div>
+                        <div class="bg-dark/50 p-6 rounded-xl border border-primary/20 card-hover">
+                            <h4 class="font-semibold mb-3 text-primary">动态分镜</h4>
+                            <p class="text-gray-300 text-sm">
+                                利用镜头运动增强画面活力，包括推、拉、摇、移等手法，提升观众代入感。
+                            </p>
+                        </div>
+                        <div class="bg-dark/50 p-6 rounded-xl border border-primary/20 card-hover">
+                            <h4 class="font-semibold mb-3 text-primary">节奏控制</h4>
+                            <p class="text-gray-300 text-sm">
+                                通过镜头长度和切换频率控制叙事节奏，紧张场景使用短镜头，抒情场景使用长镜头。
+                            </p>
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- 角色建立 -->
-                <div>
+                <div class="mb-12">
                     <h3 class="text-2xl font-semibold mb-6 flex items-center">
                         <i class="fa fa-users text-secondary mr-3"></i>
                         角色建立
                     </h3>
                     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         <div class="bg-dark/50 p-6 rounded-xl border border-secondary/20 card-hover">
-                            <h4 class="font-semibold mb-3 text-secondary">动漫角色设计要点</h4>
-                            <p class="text-gray-300 text-sm">7.5头身比例，并肩站立面向镜头45°；NANA风格用冷色调+颓废细节；城市猎人风格用高对比光影+硬派线条</p>
+                            <h4 class="font-semibold mb-3 text-secondary">角色设定</h4>
+                            <p class="text-gray-300 text-sm">
+                                从外貌、性格、背景故事三个维度构建立体角色，确保角色形象鲜明独特。
+                            </p>
+                        </div>
+                        <div class="bg-dark/50 p-6 rounded-xl border border-secondary/20 card-hover">
+                            <h4 class="font-semibold mb-3 text-secondary">表情管理</h4>
+                            <p class="text-gray-300 text-sm">
+                                通过微表情和肢体语言传达角色情绪，增强角色感染力和观众共鸣。
+                            </p>
+                        </div>
+                        <div class="bg-dark/50 p-6 rounded-xl border border-secondary/20 card-hover">
+                            <h4 class="font-semibold mb-3 text-secondary">动作设计</h4>
+                            <p class="text-gray-300 text-sm">
+                                根据角色性格设计独特的动作习惯，提升角色辨识度和画面表现力。
+                            </p>
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- 转场技巧 -->
-                <div>
+                <div class="mb-12">
                     <h3 class="text-2xl font-semibold mb-6 flex items-center">
                         <i class="fa fa-exchange text-primary mr-3"></i>
                         转场技巧
                     </h3>
                     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         <div class="bg-dark/50 p-6 rounded-xl border border-primary/20 card-hover">
-                            <h4 class="font-semibold mb-3 text-primary">转场技巧汇总</h4>
-                            <p class="text-gray-300 text-sm">硬切在动作顶点切换；匹配剪辑利用图形相似性衔接；声音桥梁用J-Cut/L-Cut平滑过渡</p>
+                            <h4 class="font-semibold mb-3 text-primary">匹配转场</h4>
+                            <p class="text-gray-300 text-sm">
+                                利用画面元素的相似性进行转场，如形状、颜色、动作的匹配，使转场自然流畅。
+                            </p>
+                        </div>
+                        <div class="bg-dark/50 p-6 rounded-xl border border-primary/20 card-hover">
+                            <h4 class="font-semibold mb-3 text-primary"> dissolve转场</h4>
+                            <p class="text-gray-300 text-sm">
+                                通过画面逐渐消失和新画面逐渐出现的叠加效果，适合时间或空间的转换。
+                            </p>
+                        </div>
+                        <div class="bg-dark/50 p-6 rounded-xl border border-primary/20 card-hover">
+                            <h4 class="font-semibold mb-3 text-primary">创意转场</h4>
+                            <p class="text-gray-300 text-sm">
+                                利用特殊效果或道具进行转场，如门的开关、镜头的遮挡等，增加画面趣味性。
+                            </p>
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- AI指令汇总 -->
                 <div>
                     <h3 class="text-2xl font-semibold mb-6 flex items-center">
@@ -120,8 +274,22 @@
                     </h3>
                     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         <div class="bg-dark/50 p-6 rounded-xl border border-secondary/20 card-hover">
-                            <h4 class="font-semibold mb-3 text-secondary">AI指令要点</h4>
-                            <p class="text-gray-300 text-sm">剧本结构化提取角色场景道具；导演级分镜生成含8个关键字段；剧本审核逐句分析可行性</p>
+                            <h4 class="font-semibold mb-3 text-secondary">角色生成</h4>
+                            <p class="text-gray-300 text-sm">
+                                详细描述角色特征、风格和场景，使用专业术语提升生成质量，如"动漫风格、手绘质感、细致光影"。
+                            </p>
+                        </div>
+                        <div class="bg-dark/50 p-6 rounded-xl border border-secondary/20 card-hover">
+                            <h4 class="font-semibold mb-3 text-secondary">场景构建</h4>
+                            <p class="text-gray-300 text-sm">
+                                明确场景类型、氛围、构图和细节，使用"镜头角度、景深、光线方向"等关键词增强效果。
+                            </p>
+                        </div>
+                        <div class="bg-dark/50 p-6 rounded-xl border border-secondary/20 card-hover">
+                            <h4 class="font-semibold mb-3 text-secondary">风格调整</h4>
+                            <p class="text-gray-300 text-sm">
+                                指定具体的艺术风格和参考作品，如"吉卜力风格、赛璐珞质感、宫崎骏画风"，获得更精准的生成结果。
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -131,15 +299,68 @@
 
     <div class="section-divider"></div>
 
-    <!-- AI对话入口预留 -->
-    <section class="py-16 px-4 md:px-8 lg:px-16 bg-darker">
-        <div class="max-w-6xl mx-auto text-center">
-            <div class="bg-dark/50 p-8 rounded-xl border border-primary/20">
-                <h2 class="text-2xl font-bold mb-6">AI数字分身</h2>
-                <p class="text-gray-300 mb-8">AI数字分身待接入</p>
-                <button class="px-8 py-3 bg-primary hover:bg-primary/80 text-white rounded-full font-medium transition-all duration-300">
-                    即将上线
-                </button>
+    <!-- 学习复盘区 -->
+    <section class="py-16 px-4 md:px-8 lg:px-16 dark:bg-darker light:bg-white">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12 text-center">学习复盘</h2>
+            <div class="grid md:grid-cols-2 gap-16">
+                <!-- 心得 -->
+                <div class="bg-dark/50 p-8 rounded-xl border border-primary/20">
+                    <h3 class="text-xl font-semibold mb-6 text-primary">我写这几篇笔记的心得</h3>
+                    <p class="text-gray-300 mb-4">
+                        通过整理30+篇视频制作笔记，我深刻体会到系统化学习的重要性。从最初的零散知识点，到后来的结构化体系，
+                        这个过程不仅帮助我巩固了所学内容，也让我发现了不同知识点之间的联系。
+                    </p>
+                    <p class="text-gray-300 mb-4">
+                        在实践中，我发现AI工具虽然强大，但真正的创意和技巧还是来自于对基础原理的理解。
+                        只有掌握了核心概念，才能更好地利用AI来提升创作效率。
+                    </p>
+                    <p class="text-gray-300">
+                        此外，教学相长的理念在这个过程中得到了充分体现。
+                        当我试图将知识点清晰地表达出来时，往往会发现自己对某些概念的理解还不够深入，
+                        这促使我进一步研究和学习。
+                    </p>
+                </div>
+
+                <!-- 给新手的建议 -->
+                <div class="bg-dark/50 p-8 rounded-xl border border-secondary/20">
+                    <h3 class="text-xl font-semibold mb-6 text-secondary">给新手的3条建议</h3>
+                    <div class="space-y-6">
+                        <div class="flex">
+                            <div class="w-8 h-8 rounded-full bg-secondary/20 flex items-center justify-center mr-4 flex-shrink-0">
+                                <span class="font-bold">1</span>
+                            </div>
+                            <div>
+                                <h4 class="font-medium mb-2">从基础开始，循序渐进</h4>
+                                <p class="text-gray-300 text-sm">
+                                    不要急于学习高级技巧，先掌握分镜、构图等基础概念，建立扎实的知识体系。
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div class="w-8 h-8 rounded-full bg-secondary/20 flex items-center justify-center mr-4 flex-shrink-0">
+                                <span class="font-bold">2</span>
+                            </div>
+                            <div>
+                                <h4 class="font-medium mb-2">多实践，多模仿</h4>
+                                <p class="text-gray-300 text-sm">
+                                    选择你喜欢的作品进行分析和模仿，通过实践将理论知识转化为实际技能。
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div class="w-8 h-8 rounded-full bg-secondary/20 flex items-center justify-center mr-4 flex-shrink-0">
+                                <span class="font-bold">3</span>
+                            </div>
+                            <div>
+                                <h4 class="font-medium mb-2">善用AI工具，提升效率</h4>
+                                <p class="text-gray-300 text-sm">
+                                    学习使用AI工具辅助创作，但不要过度依赖，保持自己的创意和风格。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -147,11 +368,11 @@
     <div class="section-divider"></div>
 
     <!-- 底部 -->
-    <footer class="py-16 px-4 md:px-8 lg:px-16 bg-dark/50">
+    <footer class="py-16 px-4 md:px-8 lg:px-16 dark:bg-dark/50 light:bg-gray-100">
         <div class="max-w-6xl mx-auto text-center">
             <div class="mb-8">
                 <h3 class="text-xl font-semibold mb-4">个人署名</h3>
-                <p class="text-gray-300">烬默渊</p>
+                <p class="text-gray-300">烬默渊moyuan</p>
             </div>
             <div class="mb-8">
                 <h3 class="text-xl font-semibold mb-4">联系方式</h3>
@@ -164,6 +385,12 @@
                     he91797618
                 </p>
             </div>
+            <div class="mb-8">
+                <p class="text-gray-300 text-lg font-medium">
+                    <i class="fa fa-refresh fa-spin text-primary mr-2"></i>
+                    持续更新中
+                </p>
+            </div>
             <div class="w-16 h-1 bg-gradient-to-r from-primary to-secondary mx-auto mb-8"></div>
             <p class="text-gray-400 text-sm">
                 © 2026 AI视频制作笔记助手 | 所有权利保留
@@ -171,4 +398,23 @@
         </div>
     </footer>
 </body>
+
+<script src="https://lf-cdn.coze.cn/obj/unpkg/flow-platform/chat-app-sdk/1.2.0-beta.19/libs/cn/index.js"></script>
+<script>
+  new CozeWebSDK.WebChatClient({
+    config: {
+      bot_id: '7602310924758433798',
+    },
+    componentProps: {
+      title: 'Coze',
+    },
+    auth: {
+      type: 'token',
+      token: 'pat_********',
+      onRefreshToken: function () {
+        return 'pat_********'
+      }
+    }
+  });
+</script>
 </html>
