@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI视频制作笔记助手 - 静态版本</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366f1',
+                        secondary: '#8b5cf6',
+                        dark: '#1e1b4b',
+                        darker: '#171123',
+                        light: '#e0e7ff'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .card-hover {
+                @apply transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 hover:-translate-y-1;
+            }
+            .section-divider {
+                @apply h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent my-16;
+            }
+        }
+    </style>
+    <style>
+        /* 全局平滑过渡效果 */
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+        
+        /* 深色主题 */
+        body {
+            @apply bg-darker text-light min-h-screen;
+        }
+    </style>
+</head>
+<body class="bg-darker text-light min-h-screen">
+    <!-- 顶部Hero区 -->
+    <section class="py-20 px-4 md:px-8 lg:px-16 bg-gradient-to-b from-dark to-darker">
+        <div class="max-w-6xl mx-auto text-center">
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
+                AI视频制作笔记助手
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-300 mb-12">
+                静态版本
+            </p>
+            <div class="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto"></div>
+        </div>
+    </section>
+
+    <!-- 笔记展示区 -->
+    <section class="py-16 px-4 md:px-8 lg:px-16 bg-darker">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12 text-center">视频制作笔记</h2>
+            
+            <!-- 笔记分类展示 -->
+            <div class="space-y-12">
+                <!-- 分镜技巧 -->
+                <div>
+                    <h3 class="text-2xl font-semibold mb-6 flex items-center">
+                        <i class="fa fa-film text-primary mr-3"></i>
+                        分镜技巧
+                    </h3>
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="bg-dark/50 p-6 rounded-xl border border-primary/20 card-hover">
+                            <h4 class="font-semibold mb-3 text-primary">场景建立序列</h4>
+                            <p class="text-gray-300 text-sm">经典漏斗式从城市鸟瞰→街区→建筑→角色；视觉韵脚式用相同构图连接场景；核心是讲述微型故事而非展示地点</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 角色建立 -->
+                <div>
+                    <h3 class="text-2xl font-semibold mb-6 flex items-center">
+                        <i class="fa fa-users text-secondary mr-3"></i>
+                        角色建立
+                    </h3>
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="bg-dark/50 p-6 rounded-xl border border-secondary/20 card-hover">
+                            <h4 class="font-semibold mb-3 text-secondary">动漫角色设计要点</h4>
+                            <p class="text-gray-300 text-sm">7.5头身比例，并肩站立面向镜头45°；NANA风格用冷色调+颓废细节；城市猎人风格用高对比光影+硬派线条</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 转场技巧 -->
+                <div>
+                    <h3 class="text-2xl font-semibold mb-6 flex items-center">
+                        <i class="fa fa-exchange text-primary mr-3"></i>
+                        转场技巧
+                    </h3>
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="bg-dark/50 p-6 rounded-xl border border-primary/20 card-hover">
+                            <h4 class="font-semibold mb-3 text-primary">转场技巧汇总</h4>
+                            <p class="text-gray-300 text-sm">硬切在动作顶点切换；匹配剪辑利用图形相似性衔接；声音桥梁用J-Cut/L-Cut平滑过渡</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- AI指令汇总 -->
+                <div>
+                    <h3 class="text-2xl font-semibold mb-6 flex items-center">
+                        <i class="fa fa-magic text-secondary mr-3"></i>
+                        AI指令汇总
+                    </h3>
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="bg-dark/50 p-6 rounded-xl border border-secondary/20 card-hover">
+                            <h4 class="font-semibold mb-3 text-secondary">AI指令要点</h4>
+                            <p class="text-gray-300 text-sm">剧本结构化提取角色场景道具；导演级分镜生成含8个关键字段；剧本审核逐句分析可行性</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- AI对话入口预留 -->
+    <section class="py-16 px-4 md:px-8 lg:px-16 bg-darker">
+        <div class="max-w-6xl mx-auto text-center">
+            <div class="bg-dark/50 p-8 rounded-xl border border-primary/20">
+                <h2 class="text-2xl font-bold mb-6">AI数字分身</h2>
+                <p class="text-gray-300 mb-8">AI数字分身待接入</p>
+                <button class="px-8 py-3 bg-primary hover:bg-primary/80 text-white rounded-full font-medium transition-all duration-300">
+                    即将上线
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- 底部 -->
+    <footer class="py-16 px-4 md:px-8 lg:px-16 bg-dark/50">
+        <div class="max-w-6xl mx-auto text-center">
+            <div class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">个人署名</h3>
+                <p class="text-gray-300">烬默渊</p>
+            </div>
+            <div class="mb-8">
+                <h3 class="text-xl font-semibold mb-4">联系方式</h3>
+                <p class="text-gray-300 mb-2">
+                    <i class="fa fa-envelope text-primary mr-2"></i>
+                    jinmoyuan@qq.com
+                </p>
+                <p class="text-gray-300">
+                    <i class="fa fa-weixin text-primary mr-2"></i>
+                    he91797618
+                </p>
+            </div>
+            <div class="w-16 h-1 bg-gradient-to-r from-primary to-secondary mx-auto mb-8"></div>
+            <p class="text-gray-400 text-sm">
+                © 2026 AI视频制作笔记助手 | 所有权利保留
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
